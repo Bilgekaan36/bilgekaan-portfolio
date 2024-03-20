@@ -69,45 +69,51 @@ export default function About() {
         </div>
         <div className="lg:order-first lg:row-span-2">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            I’m Bilgekaan Yilmaz. I live in Bursa City, where I develop awesome experiences.
+            I’m Bilgekaan Yilmaz. I live in Bursa City, where I develop awesome
+            experiences.
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
             <p>
-              I’ve loved making things for as long as I can remember, and wrote
-              my first program when I was 6 years old, just two weeks after my
-              mom brought home the brand new Macintosh LC 550 that I taught
-              myself to type on.
+              I’m Bilgekaan Yilmaz, a passionate Fullstack Developer who
+              believes in the power of beautifully crafted code. With a keen eye
+              for design and a love for creating seamless user experiences, I
+              thrive on transforming ideas into visually stunning and functional
+              digital solutions.
             </p>
             <p>
-              The only thing I loved more than computers as a kid was space.
-              When I was 8, I climbed the 40-foot oak tree at the back of our
-              yard while wearing my older sister’s motorcycle helmet, counted
-              down from three, and jumped — hoping the tree was tall enough that
-              with just a bit of momentum I’d be able to get to orbit.
+              My journey in the world of development is driven by a deep
+              appreciation for meeting the unique needs of customers. Whether
+              it’s building intuitive interfaces or crafting robust backend
+              systems, I take pride in exceeding expectations and delivering
+              solutions that resonate with users.
             </p>
             <p>
-              I spent the next few summers indoors working on a rocket design,
-              while I recovered from the multiple surgeries it took to fix my
-              badly broken legs. It took nine iterations, but when I was 15 I
-              sent my dad’s Blackberry into orbit and was able to transmit a
-              photo back down to our family computer from space.
+              Beyond coding, my interests extend to the intersection of
+              technology and innovation, particularly in the realms of
+              automotive engineering and computer science. Exploring the latest
+              advancements in these fields fuels my curiosity and inspires me to
+              push boundaries in my work.
             </p>
             <p>
-              Today, I’m the founder of Planetaria, where we’re working on
-              civilian space suits and manned shuttle kits you can assemble at
-              home so that the next generation of kids really <em>can</em> make
-              it to orbit — from the comfort of their own backyards.
+              For me, the web represents not only a platform for creativity but
+              also a gateway to freedom and endless possibilities. It’s a canvas
+              where ideas come to life, and where I’m constantly challenged to
+              innovate and evolve.
+            </p>
+            <p>
+              Join me on this journey as we explore the limitless potential of
+              technology, one line of code at a time.
             </p>
           </div>
         </div>
         <div className="lg:pl-20">
           <ul role="list">
-            <SocialLink href="#" icon={XIcon}>
+            {/* <SocialLink href="#" icon={XIcon}>
               Follow on X
             </SocialLink>
             <SocialLink href="#" icon={InstagramIcon} className="mt-4">
               Follow on Instagram
-            </SocialLink>
+            </SocialLink> */}
             <SocialLink href="#" icon={GitHubIcon} className="mt-4">
               Follow on GitHub
             </SocialLink>
@@ -115,11 +121,11 @@ export default function About() {
               Follow on LinkedIn
             </SocialLink>
             <SocialLink
-              href="mailto:spencer@planetaria.tech"
+              href="mailto:bilgekaan-yilmaz@outlook.com"
               icon={MailIcon}
               className="mt-8 border-t border-zinc-100 pt-8 dark:border-zinc-700/40"
             >
-              spencer@planetaria.tech
+              bilgekaan-yilmaz@outlook.com
             </SocialLink>
           </ul>
         </div>
