@@ -42,7 +42,7 @@ export const metadata: Metadata = {
 
 export default async function ArticlesIndex() {
   let articles = await getAllArticles()
-
+  console.log('articles', articles)
   return (
     <SimpleLayout
       title="Writing on web development, web design, and software architecture."
@@ -50,7 +50,7 @@ export default async function ArticlesIndex() {
     >
       <div className="md:border-l md:border-zinc-100 md:pl-6 md:dark:border-zinc-700/40">
         <div className="flex max-w-3xl flex-col space-y-16">
-          {articles.map((article) => (
+          {articles.map((article: any) => (
             <Article key={article.slug} article={article} />
           ))}
         </div>
