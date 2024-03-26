@@ -9,7 +9,7 @@ import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { Container } from '@/components/Container'
-import avatarImage from '@/images/avatar.jpg'
+import { Header } from './Layout'
 
 function CloseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -75,22 +75,32 @@ function MoonIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 function MobileNavItem({
   href,
   children,
+  isExternal,
 }: {
   href: string
   children: React.ReactNode
+  isExternal: boolean
 }) {
   return (
     <li>
-      <Popover.Button as={Link} href={href} className="block py-2">
+      <Popover.Button
+        as={Link}
+        href={href}
+        target={isExternal ? '_blank' : undefined}
+        className="block py-2"
+      >
         {children}
       </Popover.Button>
     </li>
   )
 }
 
-function MobileNavigation(
-  props: React.ComponentPropsWithoutRef<typeof Popover>,
-) {
+interface MobileNavigationProps
+  extends React.ComponentPropsWithoutRef<typeof Popover> {
+  headerLink?: any
+}
+
+function MobileNavigation({ headerLink, ...props }: MobileNavigationProps) {
   return (
     <Popover {...props}>
       <Popover.Button className="group flex items-center rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 dark:hover:ring-white/20">
@@ -132,11 +142,20 @@ function MobileNavigation(
             </div>
             <nav className="mt-6">
               <ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
-                <MobileNavItem href="/about">About</MobileNavItem>
+                {headerLink.map((link: any) => (
+                  <MobileNavItem
+                    key={link.url}
+                    href={link.url}
+                    isExternal={link.isExternal}
+                  >
+                    {link.text}
+                  </MobileNavItem>
+                ))}
+                {/* <MobileNavItem href="/about">About</MobileNavItem>
                 <MobileNavItem href="/articles">Articles</MobileNavItem>
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
                 <MobileNavItem href="/showcases">Showcases</MobileNavItem>
-                <MobileNavItem href="/uses">Uses</MobileNavItem>
+                <MobileNavItem href="/uses">Uses</MobileNavItem> */}
               </ul>
             </nav>
           </Popover.Panel>
@@ -149,9 +168,11 @@ function MobileNavigation(
 function NavItem({
   href,
   children,
+  isExternal,
 }: {
   href: string
   children: React.ReactNode
+  isExternal: boolean
 }) {
   let isActive = usePathname() === href
 
@@ -159,6 +180,7 @@ function NavItem({
     <li>
       <Link
         href={href}
+        target={isExternal ? '_blank' : undefined}
         className={clsx(
           'relative block px-3 py-2 transition',
           isActive
@@ -175,15 +197,19 @@ function NavItem({
   )
 }
 
-function DesktopNavigation(props: React.ComponentPropsWithoutRef<'nav'>) {
+interface DesktopNavigationProps extends React.ComponentPropsWithoutRef<'nav'> {
+  headerLink?: any
+}
+
+function DesktopNavigation({ headerLink, ...props }: DesktopNavigationProps) {
   return (
     <nav {...props}>
       <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
-        <NavItem href="/about">About</NavItem>
-        <NavItem href="/articles">Articles</NavItem>
-        <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/showcases">Showcases</NavItem>
-        <NavItem href="/uses">Uses</NavItem>
+        {headerLink.map((link: any) => (
+          <NavItem key={link.url} href={link.url} isExternal={link.isExternal}>
+            {link.text}
+          </NavItem>
+        ))}
       </ul>
     </nav>
   )
@@ -231,13 +257,14 @@ function AvatarContainer({
     />
   )
 }
-
 function Avatar({
   large = false,
   className,
+  avatar,
   ...props
 }: Omit<React.ComponentPropsWithoutRef<typeof Link>, 'href'> & {
   large?: boolean
+  avatar: any
 }) {
   return (
     <Link
@@ -247,21 +274,24 @@ function Avatar({
       {...props}
     >
       <Image
-        src={avatarImage}
-        alt=""
+        src={avatar.url}
+        alt={avatar.alternativeText}
         sizes={large ? '4rem' : '2.25rem'}
         className={clsx(
           'rounded-full bg-zinc-100 object-cover dark:bg-zinc-800',
           large ? 'h-16 w-16' : 'h-9 w-9',
         )}
+        width={large ? 64 : 36}
+        height={large ? 64 : 36}
         priority
       />
     </Link>
   )
 }
 
-export function Header() {
+export function Header({ data }: { data: Header }) {
   let isHomePage = usePathname() === '/'
+  const { headerLink, avatar } = data
 
   let headerRef = useRef<React.ElementRef<'div'>>(null)
   let avatarRef = useRef<React.ElementRef<'div'>>(null)
@@ -407,6 +437,7 @@ export function Header() {
                   <Avatar
                     large
                     className="block h-16 w-16 origin-left"
+                    avatar={avatar}
                     style={{ transform: 'var(--avatar-image-transform)' }}
                   />
                 </div>
@@ -433,13 +464,20 @@ export function Header() {
               <div className="flex flex-1">
                 {!isHomePage && (
                   <AvatarContainer>
-                    <Avatar />
+                    {/* GO forward from here set data for header avatar etc. */}
+                    <Avatar avatar={avatar} />
                   </AvatarContainer>
                 )}
               </div>
               <div className="flex flex-1 justify-end md:justify-center">
-                <MobileNavigation className="pointer-events-auto md:hidden" />
-                <DesktopNavigation className="pointer-events-auto hidden md:block" />
+                <MobileNavigation
+                  className="pointer-events-auto md:hidden"
+                  headerLink={headerLink}
+                />
+                <DesktopNavigation
+                  className="pointer-events-auto hidden md:block"
+                  headerLink={headerLink}
+                />
               </div>
               <div className="flex justify-end md:flex-1">
                 <div className="pointer-events-auto">

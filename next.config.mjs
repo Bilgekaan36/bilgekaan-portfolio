@@ -7,6 +7,18 @@ const nextConfig = {
   pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'mdx'],
   images: {
     domains: ['aceternity.com'], // Add your domain here
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '127.0.0.1',
+        port: '1337',
+        pathname: '/uploads/**/*',
+      },
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+      },
+    ],
   },
 }
 
