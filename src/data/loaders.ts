@@ -1,6 +1,7 @@
 import qs from 'qs'
 import { unstable_noStore as noStore } from 'next/cache'
 import { flattenAttributes, getStrapiURL } from '@/lib/utils'
+import { link } from 'fs'
 
 const baseUrl = getStrapiURL()
 
@@ -31,7 +32,11 @@ export async function getHomePageData() {
     populate: {
       blocks: {
         on: {
-          'layout.hero-section': true, // Populate 'hero-section' block
+          'layout.hero-section': {
+            populate: {
+              socialLinks: true,
+            },
+          },
           'layout.photos-section': {
             populate: {
               photos: {
@@ -41,7 +46,12 @@ export async function getHomePageData() {
               },
             },
           },
-          'layout.information-section': true, // Populate 'hero-section' block
+          'layout.information-section': {
+            populate: {
+              newsletter: true,
+              resumes: true,
+            },
+          },
         },
       },
     },
@@ -50,29 +60,18 @@ export async function getHomePageData() {
   return await fetchData(url.href)
 }
 
-export async function getGlobalPageData() {
+export async function getHeaderData() {
   noStore()
 
-  const url = new URL('/api/global', baseUrl)
+  const url = new URL('/api/header', baseUrl)
 
   url.search = qs.stringify({
     populate: {
-      header: {
-        populate: {
-          headerLink: {
-            populate: true,
-          },
-          avatar: {
-            fields: ['url', 'alternativeText'],
-          },
-        },
+      headerLink: {
+        populate: true,
       },
-      footer: {
-        populate: {
-          footerLink: {
-            populate: true,
-          },
-        },
+      avatar: {
+        fields: ['url', 'alternativeText'],
       },
     },
   })
@@ -80,11 +79,33 @@ export async function getGlobalPageData() {
   return await fetchData(url.href)
 }
 
-export async function getGlobalPageMetadata() {
-  const url = new URL('/api/global', baseUrl)
+export async function getFooterData() {
+  noStore()
+
+  const url = new URL('/api/footer', baseUrl)
 
   url.search = qs.stringify({
-    fields: ['title', 'description'],
+    populate: {
+      footerLink: {
+        populate: true,
+      },
+    },
+  })
+
+  return await fetchData(url.href)
+}
+
+export async function getProjectsPageData() {
+  noStore()
+
+  const url = new URL('/api/projects-page', baseUrl)
+
+  url.search = qs.stringify({
+    populate: {
+      githubProjects: {
+        populate: '*',
+      },
+    },
   })
 
   return await fetchData(url.href)

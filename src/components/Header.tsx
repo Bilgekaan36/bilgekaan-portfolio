@@ -9,7 +9,7 @@ import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { Container } from '@/components/Container'
-import { Header } from './Layout'
+import type { Header } from './Layout'
 
 function CloseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (

@@ -7,10 +7,10 @@ function blockRenderer(block: any) {
   switch (block.__component) {
     case 'layout.hero-section':
       return <HeroSection key={block.id} data={block} />
-    case 'layout.photos-section':
-      return <PhotosSection key={block.id} data={block} />
     case 'layout.information-section':
       return <InformationSection key={block.id} data={block} />
+    case 'layout.photos-section':
+      return <PhotosSection key={block.id} data={block} />
     default:
       return null
   }
@@ -19,8 +19,8 @@ function blockRenderer(block: any) {
 export default async function Home() {
   const strapiData = await getHomePageData()
 
-  console.log(strapiData)
   const { blocks } = strapiData
+  console.log(blocks)
 
   if (!blocks) return <div>No blocks found</div>
 

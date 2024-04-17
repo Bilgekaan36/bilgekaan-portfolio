@@ -2,7 +2,24 @@ import Image from 'next/image'
 import clsx from 'clsx'
 import { getStrapiMedia } from '@/lib/utils'
 
-export function PhotosSection({ data }: any) {
+interface PhotosSectionProps {
+  data: {
+    id: number
+    __component: string
+    title: string
+    description: string
+    photos: {
+      data: {
+        url: string
+        alternativeText: string
+        width: number
+        height: number
+      }[]
+    }
+  }
+}
+
+export function PhotosSection({ data }: Readonly<PhotosSectionProps>) {
   const photos = data.photos.data
   let rotations = ['rotate-2', '-rotate-2', 'rotate-2', 'rotate-2', '-rotate-2']
 
@@ -12,7 +29,7 @@ export function PhotosSection({ data }: any) {
   return (
     <div className="mt-16 sm:mt-20">
       <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {photos.map((image: any, imageIndex: any) => (
+        {photos.map((image: any, imageIndex: number) => (
           <div
             key={image.url}
             className={clsx(

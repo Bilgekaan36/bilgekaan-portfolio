@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { ContainerInner, ContainerOuter } from '@/components/Container'
-import { Footer } from './Layout'
+import type { Footer } from './Layout'
 
 function NavLink({
   href,

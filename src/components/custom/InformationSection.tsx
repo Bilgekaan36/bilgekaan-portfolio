@@ -8,6 +8,39 @@ import logoInitGroup from '@/images/logos/initgroup.svg'
 import logoPlanetaria from '@/images/logos/planetaria.svg'
 import Image, { ImageProps } from 'next/image'
 
+interface NewsletterProps {
+  id: number
+  title: string
+  description: string
+  buttonText: string
+}
+
+interface ResumeProps {
+  id: number
+  company: string
+  title: string
+  logo: string
+  end: string
+  endData: {
+    label: string
+    dateTime: string
+  }
+  start: string
+}
+
+interface InformationSectionProps {
+  data: {
+    id: number
+    __component: string
+    title: string
+    description: string
+    newsletter: NewsletterProps
+    resumes: ResumeProps[]
+    downloadButtonText: string
+    resumeTitle: string
+  }
+}
+
 function BriefcaseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
     <svg
@@ -87,7 +120,8 @@ interface Role {
   title: string
   logo: ImageProps['src']
   start: string | { label: string; dateTime: string }
-  end: string | { label: string; dateTime: string }
+  end: string
+  endData: { label: string; dateTime: string }
 }
 
 function Role({ role }: { role: Role }) {
@@ -96,13 +130,24 @@ function Role({ role }: { role: Role }) {
   let startDate =
     typeof role.start === 'string' ? role.start : role.start.dateTime
 
-  let endLabel = typeof role.end === 'string' ? role.end : role.end.label
-  let endDate = typeof role.end === 'string' ? role.end : role.end.dateTime
+  let endLabel = typeof role.end === 'string' ? role.end : role.endData.label
+  let endDate = typeof role.end === 'string' ? role.end : role.endData.dateTime
+
+  const logos = {
+    logoWorkDigital: logoWorkDigital,
+    logoInitGroup: logoInitGroup,
+    logoPlanetaria: logoPlanetaria,
+  }
 
   return (
     <li className="flex gap-4">
       <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
-        <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
+        <Image
+          src={logos[role.logo as keyof typeof logos]}
+          alt={role.logo.toString()}
+          className="h-7 w-7"
+          unoptimized
+        />
       </div>
       <dl className="flex flex-auto flex-wrap gap-x-2">
         <dt className="sr-only">Company</dt>
@@ -127,7 +172,11 @@ function Role({ role }: { role: Role }) {
   )
 }
 
-function Newsletter() {
+function Newsletter({
+  title,
+  description,
+  buttonText,
+}: Readonly<NewsletterProps>) {
   return (
     <form
       action="/thank-you"
@@ -135,10 +184,10 @@ function Newsletter() {
     >
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
         <MailIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">Stay up to date</span>
+        <span className="ml-3">{title}</span>
       </h2>
       <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-        Get notified when I publish something new, and unsubscribe at any time.
+        {description}
       </p>
       <div className="mt-6 flex">
         <input
@@ -149,63 +198,53 @@ function Newsletter() {
           className="min-w-0 flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10"
         />
         <Button type="submit" className="ml-4 flex-none">
-          Join
+          {buttonText}
         </Button>
       </div>
     </form>
   )
 }
 
-function Resume() {
-  let resume: Array<Role> = [
-    {
-      company: 'Freelancing',
-      title: 'Founder & CEO',
-      logo: logoPlanetaria,
-      start: '2023',
-      end: {
-        label: 'Present',
-        dateTime: new Date().getFullYear().toString(),
-      },
-    },
-    {
-      company: 'Work Digital',
-      title: 'Fullstack Developer',
-      logo: logoWorkDigital,
-      start: '2022',
-      end: '2023',
-    },
-    {
-      company: 'INIT Group',
-      title: 'Frontend Developer',
-      logo: logoInitGroup,
-      start: '2021',
-      end: '2022',
-    },
-  ]
-
+function Resume({
+  resumes,
+  resumeTitle,
+  downloadButtonText,
+}: Readonly<{
+  resumes: ResumeProps[]
+  resumeTitle: string
+  downloadButtonText: string
+}>) {
   return (
     <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
         <BriefcaseIcon className="h-6 w-6 flex-none" />
-        <span className="ml-3">Work</span>
+        <span className="ml-3">{resumeTitle}</span>
       </h2>
       <ol className="mt-6 space-y-4">
-        {resume.map((role, roleIndex) => (
+        {resumes.map((role: ResumeProps, roleIndex: number) => (
           <Role key={roleIndex} role={role} />
         ))}
       </ol>
-      <Button href="#" variant="secondary" className="group mt-6 w-full">
-        Download CV
+      <Button
+        href="./bilgekaan-cv.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+        download
+        variant="secondary"
+        className="group mt-6 w-full"
+      >
+        {downloadButtonText}
         <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
       </Button>
     </div>
   )
 }
 
-export async function InformationSection() {
+export async function InformationSection({
+  data,
+}: Readonly<InformationSectionProps>) {
   let articles = (await getAllArticles()).slice(0, 4)
-
+  const { newsletter, resumes, downloadButtonText, resumeTitle } = data
   return (
     <Container className="mt-24 md:mt-28">
       <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
@@ -215,8 +254,12 @@ export async function InformationSection() {
           ))}
         </div>
         <div className="space-y-10 lg:pl-16 xl:pl-24">
-          <Newsletter />
-          <Resume />
+          <Newsletter {...newsletter} />
+          <Resume
+            resumes={resumes}
+            downloadButtonText={downloadButtonText}
+            resumeTitle={resumeTitle}
+          />
         </div>
       </div>
     </Container>

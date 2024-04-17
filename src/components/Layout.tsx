@@ -1,6 +1,6 @@
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
-import { getGlobalPageData } from '@/data/loaders'
+import { getFooterData, getHeaderData } from '@/data/loaders'
 import { getStrapiMedia } from '@/lib/utils'
 
 export interface Header {
@@ -24,23 +24,13 @@ export interface Footer {
   footerText: string
 }
 
-interface HeroSectionProps {
-  data: {
-    id: number
-    title: string
-    description: string
-    header: Header
-    footer: Footer
-  }
-}
-
 export async function Layout({ children }: { children: React.ReactNode }) {
-  const strapiData: Readonly<HeroSectionProps> = await getGlobalPageData()
-  //@ts-ignore
-  const { header, footer } = strapiData
-
+  const header: Readonly<Header> = await getHeaderData()
+  const footer: Readonly<Footer> = await getFooterData()
   const url = await getStrapiMedia(header.avatar.url)
-  header.avatar.url = url
+  if (url) {
+    header.avatar.url = url
+  }
 
   return (
     <>

@@ -11,6 +11,10 @@ interface HeroSectionProps {
     __component: string
     title: string
     description: string
+    socialLinks: {
+      socialMedia: string
+      link: string
+    }[]
   }
 }
 
@@ -28,7 +32,8 @@ function SocialLink({
 }
 
 export function HeroSection({ data }: Readonly<HeroSectionProps>) {
-  const { title, description } = data
+  const { title, description, socialLinks } = data
+  console.log(data)
   return (
     <Container className="relative mt-9">
       <div className="max-w-2xl">
@@ -39,8 +44,17 @@ export function HeroSection({ data }: Readonly<HeroSectionProps>) {
           {description}
         </p>
         <div className="mt-6 flex gap-6">
-          <SocialLink
-            href="https://github.com/Kaan36"
+          {socialLinks.map((socialLink: any) => (
+            <SocialLink
+              href={socialLink.link}
+              key={socialLink.socialMedia}
+              aria-label={'Follow on' + socialLink.socialMedia}
+              target="_blank"
+              icon={socialLink.socialMedia}
+            />
+          ))}
+          {/* <SocialLink
+            href="https://github.com/bilgekaan36"
             aria-label="Follow on GitHub"
             target="_blank"
             icon={GitHubIcon}
@@ -50,7 +64,7 @@ export function HeroSection({ data }: Readonly<HeroSectionProps>) {
             aria-label="Follow on LinkedIn"
             target="_blank"
             icon={LinkedInIcon}
-          />
+          /> */}
         </div>
       </div>
       <GlobeComponent />

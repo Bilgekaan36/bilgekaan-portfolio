@@ -42,7 +42,6 @@ export const metadata: Metadata = {
 
 export default async function ArticlesIndex() {
   let articles = await getAllArticles()
-  console.log('articles', articles)
   return (
     <SimpleLayout
       title="Writing on web development, web design, and software architecture."
