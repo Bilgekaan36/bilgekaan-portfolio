@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { AppContext } from '@/app/providers'
 import { Container } from '@/components/Container'
 import { Prose } from '@/components/Prose'
-import { type ArticleWithSlug } from '@/lib/articles'
 import { formatDate } from '@/lib/formatDate'
 
 function ArrowLeftIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
@@ -26,7 +25,7 @@ export function ArticleLayout({
   article,
   children,
 }: {
-  article: ArticleWithSlug
+  article: any
   children: React.ReactNode
 }) {
   let router = useRouter()
