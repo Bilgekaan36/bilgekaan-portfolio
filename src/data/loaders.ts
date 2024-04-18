@@ -1,7 +1,6 @@
 import qs from 'qs'
 import { unstable_noStore as noStore } from 'next/cache'
 import { flattenAttributes, getStrapiURL } from '@/lib/utils'
-import { link } from 'fs'
 
 const baseUrl = getStrapiURL()
 
@@ -105,7 +104,96 @@ export async function getProjectsPageData() {
       githubProjects: {
         populate: '*',
       },
+      seo: true,
     },
+  })
+
+  return await fetchData(url.href)
+}
+
+export async function getAboutPageData() {
+  noStore()
+
+  const url = new URL('/api/about-page', baseUrl)
+
+  url.search = qs.stringify({
+    populate: {
+      socialLinks: true,
+      portrait: {
+        fields: ['url', 'alternativeText', 'width', 'height'],
+      },
+      seo: true,
+    },
+  })
+
+  return await fetchData(url.href)
+}
+
+export async function getSeoConfigData() {
+  noStore()
+
+  const url = new URL('/api/seo-config', baseUrl)
+
+  url.search = qs.stringify({
+    populate: '*',
+  })
+
+  return await fetchData(url.href)
+}
+
+export async function getUsesPageData() {
+  noStore()
+
+  const url = new URL('/api/uses-page', baseUrl)
+
+  url.search = qs.stringify({
+    populate: {
+      Tools: {
+        populate: '*',
+      },
+      seo: true,
+    },
+  })
+
+  return await fetchData(url.href)
+}
+
+export async function getArticlesPageData() {
+  noStore()
+
+  const url = new URL('/api/articles-page', baseUrl)
+
+  url.search = qs.stringify({
+    populate: {
+      articles: {
+        populate: '*',
+      },
+      seo: true,
+    },
+  })
+
+  return await fetchData(url.href)
+}
+
+export async function getArticlesData() {
+  noStore()
+
+  const url = new URL('/api/articles', baseUrl)
+
+  url.search = qs.stringify({
+    populate: '*',
+  })
+
+  return await fetchData(url.href)
+}
+
+export async function getArticleData(id: string) {
+  noStore()
+
+  const url = new URL(`/api/articles/${id}`, baseUrl)
+
+  url.search = qs.stringify({
+    populate: '*',
   })
 
   return await fetchData(url.href)

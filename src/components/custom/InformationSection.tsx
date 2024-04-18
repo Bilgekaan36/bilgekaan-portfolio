@@ -1,5 +1,4 @@
 import { Container } from '@/components/Container'
-import { type ArticleWithSlug, getAllArticles } from '@/lib/articles'
 import { Card } from '@/components/Card'
 import { Button } from '@/components/Button'
 import { formatDate } from '@/lib/formatDate'
@@ -7,6 +6,9 @@ import logoWorkDigital from '@/images/logos/workdigital.svg'
 import logoInitGroup from '@/images/logos/initgroup.svg'
 import logoPlanetaria from '@/images/logos/planetaria.svg'
 import Image, { ImageProps } from 'next/image'
+import { getArticlesData } from '@/data/loaders'
+import { ArticleWithId } from '@/app/articles/page'
+import Link from 'next/link'
 
 interface NewsletterProps {
   id: number
@@ -100,17 +102,17 @@ function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   )
 }
 
-function Article({ article }: { article: ArticleWithSlug }) {
+function Article({ article }: { article: ArticleWithId }) {
   return (
     <Card as="article">
-      <Card.Title href={`/articles/${article.slug}`}>
-        {article.title}
-      </Card.Title>
-      <Card.Eyebrow as="time" dateTime={article.date} decorate>
-        {formatDate(article.date)}
-      </Card.Eyebrow>
-      <Card.Description>{article.description}</Card.Description>
-      <Card.Cta>Read article</Card.Cta>
+      <Link href="/articles/[id]" as={`/articles/${article.id}`}>
+        <Card.Title>{article.title}</Card.Title>
+        <Card.Eyebrow as="time" dateTime={article.date} decorate>
+          {formatDate(article.date)}
+        </Card.Eyebrow>
+        <Card.Description>{article.description}</Card.Description>
+        <Card.Cta>Read article</Card.Cta>
+      </Link>
     </Card>
   )
 }
@@ -243,7 +245,7 @@ function Resume({
 export async function InformationSection({
   data,
 }: Readonly<InformationSectionProps>) {
-  let articles = (await getAllArticles()).slice(0, 4)
+  let articles = (await getArticlesData()).data.slice(0, 4)
   const { newsletter, resumes, downloadButtonText, resumeTitle } = data
   return (
     <Container className="mt-24 md:mt-28">

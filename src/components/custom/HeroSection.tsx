@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import { getStrapiMedia } from '@/lib/utils'
 import { Container } from '@/components/Container'
 import { GlobeComponent } from '@/components/GlobeComponent'
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
@@ -31,9 +29,13 @@ function SocialLink({
   )
 }
 
+const logos = {
+  GitHubIcon: GitHubIcon,
+  LinkedInIcon: LinkedInIcon,
+}
+
 export function HeroSection({ data }: Readonly<HeroSectionProps>) {
   const { title, description, socialLinks } = data
-  console.log(data)
   return (
     <Container className="relative mt-9">
       <div className="max-w-2xl">
@@ -50,21 +52,9 @@ export function HeroSection({ data }: Readonly<HeroSectionProps>) {
               key={socialLink.socialMedia}
               aria-label={'Follow on' + socialLink.socialMedia}
               target="_blank"
-              icon={socialLink.socialMedia}
+              icon={logos[socialLink.socialMedia as keyof typeof logos]}
             />
           ))}
-          {/* <SocialLink
-            href="https://github.com/bilgekaan36"
-            aria-label="Follow on GitHub"
-            target="_blank"
-            icon={GitHubIcon}
-          />
-          <SocialLink
-            href="https://linkedin.com/in/bilgekaan-yilmaz-107888228"
-            aria-label="Follow on LinkedIn"
-            target="_blank"
-            icon={LinkedInIcon}
-          /> */}
         </div>
       </div>
       <GlobeComponent />

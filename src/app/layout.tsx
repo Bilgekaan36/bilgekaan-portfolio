@@ -1,30 +1,33 @@
 import { type Metadata } from 'next'
-
 import { Providers } from '@/app/providers'
 import { Layout } from '@/components/Layout'
-
 import '@/styles/tailwind.css'
+import { getSeoConfigData } from '@/data/loaders'
 
-export const metadata: Metadata = {
-  title: {
-    template: '%s - Bilgekaan Yilmaz',
-    default:
-      'Bilgekaan Yilmaz - Fullstack developer, designer, and tech enthusiast',
-  },
-  description:
-    'I’m Bilgekaan, a Fullstack developer and entrepreneur based in Bursa City. I’m the founder and CEO of Planetaria, where we develop technologies that empower regular people to explore space on their own terms.',
-  alternates: {
-    types: {
-      'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
-    },
-  },
-}
+export let metadata: Metadata
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const { defaultSeo } = await getSeoConfigData()
+  const { seoTitle, seoDescription } = defaultSeo
+
+  // Define metadata with seoTitle and seoDescription
+  metadata = {
+    title: {
+      template: `%s - ${seoTitle}`,
+      default: seoTitle,
+    },
+    description: seoDescription,
+    alternates: {
+      types: {
+        'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
+      },
+    },
+  }
+
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <body className="flex h-full bg-zinc-50 dark:bg-black">
