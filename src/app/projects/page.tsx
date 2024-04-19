@@ -8,17 +8,8 @@ import logoCosmos from '@/images/logos/cosmos.svg'
 import logoHelioStream from '@/images/logos/helio-stream.svg'
 import logoOpenShuttle from '@/images/logos/open-shuttle.svg'
 import logoPlanetaria from '@/images/logos/planetaria.svg'
+import { GitHubIcon } from '@/components/SocialIcons'
 import { getProjectsPageData } from '@/data/loaders'
-
-// const projects = [
-//   {
-//     name: 'Planetaria',
-//     description:
-//       'Creating technology to empower civilians to explore space on their own terms.',
-//     link: { href: 'http://planetaria.tech', label: 'planetaria.tech' },
-//     logo: logoPlanetaria,
-//   },
-// ]
 
 function LinkIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -39,6 +30,7 @@ const logos = {
   logoHelioStream: logoHelioStream,
   logoOpenShuttle: logoOpenShuttle,
   logoPlanetaria: logoPlanetaria,
+  GitHubIcon: GitHubIcon,
 }
 
 export default async function Projects() {
