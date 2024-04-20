@@ -55,3 +55,35 @@ export function flattenAttributes(data: any): any {
 
   return flattened
 }
+
+// Import Axios
+// import axios from 'axios'
+
+// Function to fetch all images from media library
+// const getAllImages = async () => {
+//   try {
+//     // Make a GET request to fetch all files from the media library
+//     const url: any =  await getStrapiMedia('http://127.0.0.1:1337/upload/files')
+//     const response = await fetch(url)
+//     console.log(response)
+//     // // Filter out only images
+//     // const images = response.data.filter((file: any) =>
+//     //   file.mime.startsWith('image/'),
+//     // )
+//     // console.log(images)
+//     // return images
+//   } catch (error) {
+//     console.error('Error fetching images:', error)
+//     return []
+//   }
+// }
+
+// // Usage
+// getAllImages()
+//   .then((images) => {
+//     console.log('All images:', images)
+//     // Do something with the images
+//   })
+//   .catch((error) => {
+//     console.error('Error:', error)
+//   })

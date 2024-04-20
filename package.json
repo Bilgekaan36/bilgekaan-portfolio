@@ -24,6 +24,7 @@
     "@types/three": "^0.162.0",
     "@types/webpack-env": "^1.18.1",
     "autoprefixer": "^10.4.12",
+    "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.12",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
