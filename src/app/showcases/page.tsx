@@ -1,109 +1,37 @@
-import { type Metadata } from 'next'
-
-import { HeroParallax } from '@/components/ui/hero-parallax'
-
-export const metadata: Metadata = {
-  title: 'Showcases',
-  description:
-    'I’ve developing at projects all around the world and been successful for many customers.',
-}
+import React from 'react'
+import { ContainerScroll } from '@/components/ui/container-scroll-animation'
+import Image from 'next/image'
+import { Video } from '@/components/Video'
 
 export default function Showcases() {
-  return <HeroParallax products={products} />
+  const url = [
+    'http://127.0.0.1:1337/uploads/Screen_Recording_2024_04_20_at_17_56_45_a96ccde5c6.mov',
+  ]
+
+  return (
+    <div className="flex flex-col overflow-hidden">
+      <ContainerScroll
+        titleComponent={
+          <>
+            <h1 className="text-4xl font-semibold text-black dark:text-white">
+              Some of my selected <br />
+              <span className="mt-1 text-4xl font-bold leading-none md:text-[6rem]">
+                Showcases
+              </span>
+            </h1>
+          </>
+        }
+      >
+        {/* <Image
+          src={`/linear.webp`}
+          alt="hero"
+          height={720}
+          width={1400}
+          className="mx-auto h-full rounded-2xl object-cover object-left-top"
+          draggable={false}
+        /> */}
+        <Video url={url.length > 0 ? url[0] : ''} />
+      </ContainerScroll>
+    </div>
+  )
 }
-
-const products = [
-  {
-    title: 'Moonbeam',
-    link: 'https://gomoonbeam.com',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/moonbeam.png',
-  },
-  {
-    title: 'Cursor',
-    link: 'https://cursor.so',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/cursor.png',
-  },
-  {
-    title: 'Rogue',
-    link: 'https://userogue.com',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/rogue.png',
-  },
-
-  {
-    title: 'Editorially',
-    link: 'https://editorially.org',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/editorially.png',
-  },
-  {
-    title: 'Editrix AI',
-    link: 'https://editrix.ai',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/editrix.png',
-  },
-  {
-    title: 'Pixel Perfect',
-    link: 'https://app.pixelperfect.quest',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/pixelperfect.png',
-  },
-
-  {
-    title: 'Algochurn',
-    link: 'https://algochurn.com',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/algochurn.png',
-  },
-  {
-    title: 'Aceternity UI',
-    link: 'https://ui.aceternity.com',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/aceternityui.png',
-  },
-  {
-    title: 'Tailwind Master Kit',
-    link: 'https://tailwindmasterkit.com',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/tailwindmasterkit.png',
-  },
-  {
-    title: 'SmartBridge',
-    link: 'https://smartbridgetech.com',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/smartbridge.png',
-  },
-  {
-    title: 'Renderwork Studio',
-    link: 'https://renderwork.studio',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/renderwork.png',
-  },
-
-  {
-    title: 'Creme Digital',
-    link: 'https://cremedigital.com',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/cremedigital.png',
-  },
-  {
-    title: 'Golden Bells Academy',
-    link: 'https://goldenbellsacademy.com',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/goldenbellsacademy.png',
-  },
-  {
-    title: 'Invoker Labs',
-    link: 'https://invoker.lol',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/invoker.png',
-  },
-  {
-    title: 'E Free Invoice',
-    link: 'https://efreeinvoice.com',
-    thumbnail:
-      'https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png',
-  },
-]
