@@ -17,6 +17,10 @@ export default function Showcases() {
       path: 'https://pingo.blog/',
     },
     {
+      url: 'http://localhost:1337/uploads/Screen_Recording_2024_04_22_at_17_04_32_5ce255623c.mov',
+      path: 'https://drill-webgi-one.vercel.app/',
+    },
+    {
       url: 'http://localhost:1337/uploads/Screen_Recording_2024_04_21_at_16_59_10_e46b80880d.mov',
       path: 'https://iphone-b750x98ir-bilgekaan-yilmazs-projects.vercel.app/',
     },
